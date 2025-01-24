@@ -112,9 +112,14 @@ urlpatterns = [
 # django-ckeditor==6.7.1
 
 # super user credencial
-# Email address: test1@gmail.com
-# Username (leave blank to use 'shuai'): test1
-# Password: 1234
+# Email address: test1@gmail.com / 
+# Username (leave blank to use 'shuai'): test1 / islam
+# Password: 1234 / password
+
+# server superu user 
+# name: islam
+# password: password
+
 # selenium version==
 # when download video, save in db with playlist and video,  title description, etc. video file name should not be greather then 90 words
 # why m not able to play video from random timelines

@@ -340,7 +340,7 @@
 
 
 
-        <section class="all-content mb-5">
+        {% comment %} <section class="all-content mb-5">
             <div class="container">
                 <!-- Videos Section -->
                 <div class="row mb-5">
@@ -423,7 +423,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> {% endcomment %}
 
 {% comment %} 
 
@@ -517,7 +517,7 @@
 
 
 {% comment %}  v0 ai {% endcomment %}
-<div class="container-fluid p-0" style="background-color:white;">
+{% comment %} <div class="container-fluid p-0" style="background-color:white;">
     <!-- Featured Videos Slider -->
     <section class="featured-videos mb-5">
         <div class="container">
@@ -531,7 +531,7 @@
                                 <div class="col-md-6">
                                     <div class="video-thumbnail">
                                         {% comment %} {% if video.image %}
-                                            <img src="{{ video.image.url }}" class="img-fluid" alt="{{ video.title }}"> {% endcomment %}
+                                            <img src="{{ video.image.url }}" class="img-fluid" alt="{{ video.title }}">
                                         {% if video.image %}
                                             <img src="{{ video.image.url }}" class="img-fluid" alt="{{ video.title }}">
                                         {% else %}
@@ -577,7 +577,11 @@
                 </button>
             </div>
         </div>
-    </section>
+    </section> {% endcomment %}
+
+
+
+
 
     {% comment %} <!-- All Videos Section -->
     <section class="all-videos mb-5">

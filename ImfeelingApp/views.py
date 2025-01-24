@@ -24,10 +24,16 @@ from .forms import PlaylistURLForm
 
 
 def index(request):
+    # context = {
+    #     'featured_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('-views')[:6],
+    #     'latest_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('created_at')[:6],
+    #     'playlists': Playlist.objects.all()[:6],
+    # }
+
     context = {
-        'featured_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('-views')[:6],
-        'latest_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('created_at')[:6],
-        'playlists': Playlist.objects.all()[:6],
+        'featured_videos': VideoPlaylist.objects.none(),
+        'latest_videos': VideoPlaylist.objects.none(),
+        'playlists': Playlist.objects.none(),
     }
     return render(request, 'index.html', context)
 
@@ -797,8 +803,7 @@ def start_download(request):
                     request.session.modified = True
 
                     # Get video info first
-                    video_url = f"https://www.youtube.com/watch?v={
-                        video['id']}"
+                    video_url = f"https://www.youtube.com/watch?v={video['id']}"
                     video_info_dict = ydl.extract_info(
                         video_url, download=False)
 
