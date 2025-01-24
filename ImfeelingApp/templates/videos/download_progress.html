@@ -1,0 +1,303 @@
+<!-- templates/videos/download_progress.html -->
+
+{% load custom_filters %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloading Playlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #0a192f, #112240);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-header {
+            position: relative;
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .playlist-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: linear-gradient(45deg, #64ffda, #00bcd4);
+            transition: width 0.5s ease;
+        }
+
+        .video-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .video-item.downloading {
+            animation: pulse 2s infinite;
+            border-color: #64ffda;
+        }
+
+        .video-item.complete {
+            background: rgba(100, 255, 218, 0.1);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(100, 255, 218, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(100, 255, 218, 0); }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #64ffda;
+        }
+
+        .download-status {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid #64ffda;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="progress-container">
+            <div class="progress-header">
+                <h2>
+                    <i class="fas fa-cloud-download-alt me-2"></i>
+                    Downloading Playlist
+                </h2>
+                <div class="download-status">
+                    <i class="fas fa-sync fa-spin me-2"></i>
+                    Processing...
+                </div>
+            </div>
+
+            <div class="playlist-info">
+                <h3>{{ download_info.playlist_title }}</h3>
+                <p class="mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    {{ download_info.total_videos }} videos in playlist
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number" id="downloaded-count">
+                        {{ download_info.downloaded_count }}
+                    </div>
+                    <div>Videos Downloaded</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="remaining-count">
+                        {{ download_info.total_videos|subtract:download_info.downloaded_count }}
+                    </div>
+                    <div>Videos Remaining</div>
+                </div>
+                <div class="stat-box">                    
+                    <div class="stat-number" id="progress-percentage">
+                        {{ download_info.downloaded_count|percentage:download_info.total_videos }}%
+                    </div>
+                    <div>Complete</div>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h5>Overall Progress</h5>
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" 
+                         style="width: {{ download_info.downloaded_count|percentage:download_info.total_videos }}%">
+                    </div>
+                </div>
+            </div>
+
+            <div class="current-download mb-4">
+                <h5>Currently Downloading</h5>
+                <div class="video-item downloading">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-circle-notch fa-spin me-3"></i>
+                        <div>
+                            <h6 class="mb-1" id="current-video-title">
+                                {{ download_info.current_video }}
+                            </h6>
+                            <small class="text-muted">Processing...</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="completed-videos">
+                <h5>Completed Videos</h5>
+                <div id="video-list">
+                    {% for video in download_info.videos %}
+                        <div class="video-item {% if video.status == 'complete' %}complete{% endif %}">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle me-3 text-success"></i>
+                                <div>
+                                    <h6 class="mb-1">{{ video.title }}</h6>
+                                    <small class="text-success">Downloaded</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function updateUI(data) {
+            // Get all elements
+            const progressPercentage = document.getElementById('progress-percentage');
+            const remainingCount = document.getElementById('remaining-count');
+            const downloadedCount = document.getElementById('downloaded-count');
+            const currentVideoTitle = document.getElementById('current-video-title');
+            const progressBar = document.querySelector('.progress-bar');
+            const videoList = document.getElementById('video-list');
+    
+            // Calculate percentage
+            const percentage = data.progress_percentage || 0;
+    
+            // Update progress percentage
+            if (progressPercentage) {
+                progressPercentage.textContent = `${percentage}%`;
+            }
+    
+            // Update remaining count
+            if (remainingCount) {
+                remainingCount.textContent = data.total_videos - data.downloaded_count;
+            }
+    
+            // Update downloaded count
+            if (downloadedCount) {
+                downloadedCount.textContent = data.downloaded_count;
+            }
+    
+            // Update current video title
+            if (currentVideoTitle && data.current_video) {
+                currentVideoTitle.textContent = data.current_video;
+            }
+    
+            // Update progress bar
+            if (progressBar) {
+                progressBar.style.width = `${percentage}%`;
+            }
+    
+            // Update video list
+            if (videoList && data.videos && data.videos.length > 0) {
+                const videoItems = data.videos.map(video => `
+                    <div class="video-item complete">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle me-3 text-success"></i>
+                            <div>
+                                <h6 class="mb-1">${video.title}</h6>
+                                <small class="text-success">Downloaded</small>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                videoList.innerHTML = videoItems;
+            }
+        }
+    
+        function checkProgress() {
+            fetch('/download-status/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Progress data:', data); // Debug log
+                    
+                    if (data.status === 'error') {
+                        console.error('Error:', data.message);
+                        return;
+                    }
+    
+                    // Update UI with new data
+                    updateUI(data);
+    
+                    // If download is complete, redirect to success page
+                    if (data.status === 'complete') {
+                        window.location.href = '/upload-success/';
+                        return;
+                    }
+    
+                    // Continue checking progress if still processing
+                    if (data.status === 'downloading' || data.status === 'processing') {
+                        setTimeout(checkProgress, 1000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking progress:', error);
+                    setTimeout(checkProgress, 1000);
+                });
+        }
+    
+        // Start the download process when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/start-download/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Start download response:', data); // Debug log
+                if (data.status === 'error') {
+                    console.error('Error starting download:', data.message);
+                    return;
+                }
+                // Start checking progress
+                checkProgress();
+            })
+            .catch(error => {
+                console.error('Error starting download:', error);
+            });
+        });
+    </script>
+
+
+</body>
+</html>

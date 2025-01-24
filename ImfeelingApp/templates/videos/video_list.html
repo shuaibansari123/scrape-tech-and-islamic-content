@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">Videos</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {% for video in videos %}
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <img src="{{ video.image_url }}" alt="{{ video.title }}" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h2 class="text-lg font-semibold mb-2">{{ video.title }}</h2>
+                <p class="text-gray-600 text-sm">{{ video.views }} views • {{ video.created_at|date:"F d, Y" }}</p>
+                <a href="{% url 'video_detail' video.id %}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-black-600" style="background-color:rgb(239 233 19); color: black;     border: 1px solid;">Watch Video</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

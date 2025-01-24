@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>THEMosque - Spiritual Guidance & Community</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    
+    <style>
+        :root {
+            --primary: #8B5E3C;
+            --secondary: #C4A484;
+            --accent: #F2D4AB;
+            --background: #FAF6F1;
+            --text: #2C1810;
+            --text-light: #5C4033;
+            --white: #FFFFFF;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .topbar {
+            background-color: var(--white);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        {% comment %} .navbar {
+            background-color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        } {% endcomment %}
+
+        {% comment %} .navbar-brand {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 2rem;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .navbar-brand span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        } {% endcomment %}
+
+        /* Hero Section */
+        .hero {
+            background-image: url('{% static "img/hero.jpg" %}');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Noto Nastaliq Urdu', serif;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Feelings Grid */
+        .feelings-section {
+            padding: 4rem 0;
+        }
+
+        .feelings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .feeling-card {
+            background-color: var(--white);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .feeling-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.5);
+        }
+
+        .feeling-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            background-color: var(--accent);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-links h4 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    {% comment %} <!-- Topbar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="contact-info">
+                <a href="tel:+012345678"><i class="fas fa-phone-alt"></i> +012 345 6789</a>
+                <a href="mailto:info@example.com"><i class="far fa-envelope"></i> info@example.com</a>
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+    <!-- Navbar -->
+    {% comment %} <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'home' %}" class="navbar-brand">THE<span>Mosque</span></a>
+            
+        </div>
+    </nav> {% endcomment %}
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content animate-fade-in">
+            <h1 style="color:#f1c152;">I'm Feeling...</h1>
+            <p>Discover duas to guide you through every emotion and strengthen your connection with Allah.</p>
+            <a href="#feeling-card" class="read-more" style="background-color:#bb870e;">Explore Duas</a>
+        </div>
+    </section>
+
+    <!-- Feelings Grid -->
+    <section class="feelings-section">
+        <div class="container">
+            <div class="feelings-grid">
+                {% for obj in objs %}
+                <div class="feeling-card animate-fade-in" style="background-color: {{ obj.color }};">
+                    <div class="feeling-title">{{ obj.feeling_name }}</div>
+                    <a href="{% url 'single-feeling' obj.feeling_name %}" style="background-color:#f1c152; color:black; " class="read-more">Read More</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Stay updated with our latest news and announcements</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email">
+                <button type="submit" class="read-more">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-links">
+                    <h4>About Us</h4>
+                    <p>A place of worship and community, dedicated to spreading peace and understanding.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Activities</a>
+                    <a href="#">Events</a>
+                    <a href="#">Contact</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Contact Us</h4>
+                    <p>123 Street, New York, USA</p>
+                    <p>+012 345 67890</p>
+                    <p>info@example.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} THEMosque. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    {% comment %} custom video player  {% endcomment %}
+    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet">
+<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+
+
+
+    .flex mb-4 {
+        transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for transform and shadow */
+    }
+     .flex mb-4:hover {
+        transform: scale(1.05); /* Slightly enlarge the card */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+    }
+ </style>
+<div class="container mx-auto px-4 py-8">
+    <div class="flex flex-col lg:flex-row">
+        <!-- Main video player -->
+        <div class="lg:w-3/4 mb-8 lg:mb-0">
+            <video class="w-full" controls>
+                <source src="{{ video.file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <h1 class="text-2xl font-bold mt-4">{{ video.title }}</h1>
+            <p class="text-gray-600 mt-2">{{ video.views }} views • {{ video.created_at|date:"F d, Y" }}</p>
+            <div class="mt-4">
+                {{ video.description|safe }}
+            </div>
+        </div>
+        
+        <!-- Suggested videos -->
+        <div class="lg:w-1/4 lg:ml-8">
+            <h2 class="text-xl font-semibold mb-4">Suggested Videos</h2>
+            {% for suggested_video in suggested_videos %}
+            <div class="flex mb-4">
+                <a href="{% url 'video_detail' suggested_video.id %}" class="flex items-center">
+                    <img src="{{ suggested_video.image_url }}" alt="{{ suggested_video.title }}" class="w-40 h-24 object-cover">
+                    <div class="ml-4">
+                        <h3 class="font-semibold">{{ suggested_video.title }}</h3>
+                        <p class="text-sm text-gray-600">{{ suggested_video.views }} views</p>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

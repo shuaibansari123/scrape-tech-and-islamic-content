@@ -1,0 +1,38 @@
+<!-- dua_dhikr_list.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dua & Dhikr</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Dua & Dhikr</h1>
+        <div class="row">
+            {% for item in dua_dhikr %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{% static 'img/hand-drawn-flat-design-salat-illustration/dua_dhikr.jpg' %}" class="card-img-top" alt="{{ item.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title" style="align:center; text-align:center;">{{ item.title }}</h5>
+                            <a href="{% url 'dua_dhikr_detail' item.pk %}" class="btn btn-primary" style="align:center; text-align:center; margin-left: 2.7rem;">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

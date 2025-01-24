@@ -1,0 +1,16 @@
+<h2>Download Info</h2>
+<pre>{{ download_info|pprint }}</pre>
+
+<h2>Video Info</h2>
+<pre>{{ video_info|pprint }}</pre>
+
+<h2>Playlists in Database</h2>
+{% for playlist in playlists %}
+    <h3>{{ playlist.title }}</h3>
+    <p>Videos: {{ playlist.videos.count }}</p>
+{% endfor %}
+
+<h2>Videos in Database</h2>
+{% for video in videos %}
+    <p>{{ video.title }} - {{ video.file }}</p>
+{% endfor %}

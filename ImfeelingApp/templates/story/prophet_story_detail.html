@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ story.title }} - THEMosque</title>
+    <meta name="description" content="Learn about the story of {{ story.title }} in Islamic history.">
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="{% static 'css/bootstrap.min.css' %}" as="style">
+    <link rel="preload" href="{% static 'css/style.css' %}" as="style">
+    <link rel="preload" href="{% static 'js/bootstrap.bundle.min.js' %}" as="script">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        :root {
+            --primary-color: #1A2238;
+            --secondary-color: #C6A567;
+            --text-color: #333;
+            --bg-color: #F9F7F4;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .story-header {
+            background: linear-gradient(rgb(182 245 187 / 97%), #13f10685);
+        background-size: cover;
+        background-position: center;
+        color: white;
+        padding: 7rem 0;
+        margin-bottom: -8rem;
+        height: 64%;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .story-image {
+            max-height: 400px;
+            object-fit: cover;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            margin-top: -50px;
+            position: relative;
+        }
+
+        .btn-back {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background-color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .story-header {
+                padding: 2rem 0;
+            }
+
+            .story-content {
+                margin-top: 0;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="story-header">
+        <div class="container">
+          
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <article class="row">
+            <div class="col-lg-8 mx-auto">
+                <img src="{% static 'img/hand-drawn-flat-design-salat-illustration/imam.jpg' %}" style="height: 50vh;" class="card-img-top" alt="{{ story.title }}">
+                           
+                <div class="story-content">
+                    <div class="content" >
+                       <div style="background-color:#e2f7dc;  padding-top:25px;"> {{ story.description|safe }} </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4" >
+                    <a href="{% url 'prophet_story_list' %}" class="btn btn-back" style="    background-color: #13f10685; color: #246705;">
+                        <i class="fas fa-arrow-left me-2" >Back to Stories </i>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; {% now "Y" %} THEMosque. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+</body>
+</html>

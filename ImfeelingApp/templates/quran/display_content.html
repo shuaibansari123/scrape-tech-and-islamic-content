@@ -1,0 +1,15 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Surah Content</title>
+</head>
+<body>
+    <h1>{{ translation.surah.title }} - {{ translation.language }}</h1>
+    <div>
+        <p>{{ translation.content }}</p>
+    </div>
+    <a href="{% url 'select_surah' %}">Back</a>
+</body>
+</html>
