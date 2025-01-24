@@ -24,17 +24,17 @@ from .forms import PlaylistURLForm
 
 
 def index(request):
-    # context = {
-    #     'featured_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('-views')[:6],
-    #     'latest_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('created_at')[:6],
-    #     'playlists': Playlist.objects.all()[:6],
-    # }
-
     context = {
-        'featured_videos': VideoPlaylist.objects.none(),
-        'latest_videos': VideoPlaylist.objects.none(),
-        'playlists': Playlist.objects.none(),
+        'featured_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('-views')[:6],
+        'latest_videos': VideoPlaylist.objects.filter(image__isnull=False).order_by('created_at')[:6],
+        'playlists': Playlist.objects.all()[:6],
     }
+
+    # context = {
+    #     'featured_videos': VideoPlaylist.objects.none(),
+    #     'latest_videos': VideoPlaylist.objects.none(),
+    #     'playlists': Playlist.objects.none(),
+    # }
     return render(request, 'index.html', context)
 
 
